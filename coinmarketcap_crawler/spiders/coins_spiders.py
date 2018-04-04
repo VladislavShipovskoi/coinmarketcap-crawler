@@ -43,5 +43,4 @@ class CoinmarketcapSpider(CrawlSpider):
         coin_item['market_cap_usd'] = response.xpath("//span[@data-currency-market-cap]/@data-usd").extract_first()
         coin_item['volume_24_usd'] = response.xpath("//span[@data-currency-volume]/@data-usd").extract_first()
 
-
         yield coin_item
