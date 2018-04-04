@@ -34,7 +34,14 @@ class CoinmarketcapSpider(CrawlSpider):
     def parse_coin(self,response):
         coin_item = CoinmarketcapItem()
         coin_item['coin'] = response.xpath('//h1/img/@alt').extract_first()
+        coin_item['short_name'] = response.xpath("//h1/img/following-sibling::small[@class='bold hidden-xs']/text()").extract_first().strip('()')
+        coin_item['rank'] = response.xpath("//span[@class='label label-success']/text()").extract_first().replace('Rank ', '')
         coin_item['website'] = '\n'.join(response.xpath("//ul/li/span[@title='Website']/following-sibling::a/@href").extract())
-        coin_item['price'] = response.xpath("//span[@id='quote_price']/span[@class='text-large2']/text()").extract_first()
+        coin_item['price_usd'] = response.xpath("//span[@id='quote_price']/span[@class='text-large2']/text()").extract_first()
+        coin_item['price_btc'] = response.xpath("//span[contains(.,'BTC')]/span/text()").extract_first().replace('\n', '')
+        coin_item['change_24_usd'] = response.xpath("//span[@class='text-large2  negative_change']/span/text()").extract_first()
+        coin_item['market_cap_usd'] = response.xpath("//span[@data-currency-market-cap]/@data-usd").extract_first()
+        coin_item['volume_24_usd'] = response.xpath("//span[@data-currency-volume]/@data-usd").extract_first()
+
 
         yield coin_item
