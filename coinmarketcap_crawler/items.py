@@ -9,4 +9,11 @@ import scrapy
 
 
 class CoinmarketcapItem(scrapy.Item):
-    pass
+    coin = scrapy.Field()
+    website = scrapy.Field()
+    rank = scrapy.Field()
+    # mineable = scrapy.Field()
+    # market_cap = scrapy.Field()
+    price = scrapy.Field()
+    # volume_24 = scrapy.Field()
+    # change_24 = scrapy.Field()
