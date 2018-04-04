@@ -9,6 +9,9 @@ This is web crawler coinmarketcap data.Results are contained in the file coins.c
 
 ## Data
 Spider collect:
-* coin name,website
-* coin rank
+* coin name,abbreviation,website,rank
 * coin price in USD,BTC
+* coin price change(24h) in usd
+* coin volume(24h) in usd
+* coin market cap in usd
+
