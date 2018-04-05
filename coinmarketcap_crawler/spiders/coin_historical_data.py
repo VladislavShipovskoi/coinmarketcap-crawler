@@ -25,13 +25,26 @@ class HistoricalDataSpider(CrawlSpider):
         all_data = response.xpath("//tbody/tr[@class='text-right']")
         if all_data:
             for data in all_data:
-                print(data)
                 historical_data_item = HistoricalData()
-                historical_data_item['date'] = data.xpath("td[1]/text()").extract_first()
-                historical_data_item['open_price'] = data.xpath("td[2]/@data-format-value").extract_first()
-                historical_data_item['high_price'] = data.xpath("td[3]/@data-format-value").extract_first()
-                historical_data_item['low_price'] = data.xpath("td[4]/@data-format-value").extract_first()
-                historical_data_item['close_price'] = data.xpath("td[5]/@data-format-value").extract_first()
-                historical_data_item['volume'] = data.xpath("td[6]/@data-format-value").extract_first()
-                historical_data_item['market_cap'] = data.xpath("td[7]/@data-format-value").extract_first()
+                historical_data_item['date'] = data.xpath(
+                    "td[1]/text()"
+                ).extract_first()
+                historical_data_item['open_price'] = data.xpath(
+                    "td[2]/@data-format-value"
+                ).extract_first()
+                historical_data_item['high_price'] = data.xpath(
+                    "td[3]/@data-format-value"
+                ).extract_first()
+                historical_data_item['low_price'] = data.xpath(
+                    "td[4]/@data-format-value"
+                ).extract_first()
+                historical_data_item['close_price'] = data.xpath(
+                    "td[5]/@data-format-value"
+                ).extract_first()
+                historical_data_item['volume'] = data.xpath(
+                    "td[6]/@data-format-value"
+                ).extract_first()
+                historical_data_item['market_cap'] = data.xpath(
+                    "td[7]/@data-format-value"
+                ).extract_first()
                 yield historical_data_item
