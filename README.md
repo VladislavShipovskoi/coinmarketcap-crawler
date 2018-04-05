@@ -1,6 +1,6 @@
 # coinmarketcap-crawler
 
-This is web crawler coinmarketcap data.Results are contained in the file coins.csv.
+This is web crawler coinmarketcap data.Results are contained in the csv file.
 
 ## Start
 1. make virtualenv and run
@@ -17,6 +17,24 @@ pip install -r requirements.txt
 ```bash
 scrapy crawl coinmarketcapspider
 ```
+## Arguments
+* page - the start page (default page = 1)
+```bash
+scrapy crawl coinmarketcapspider -a page=2
+```
+* min_price - min price coin in USD (will be collected all the coins whose price is greater min_price,default=0)
+```bash
+scrapy crawl coinmarketcapspider -a min_price=10
+```
+* max_price - max price coin in USD (will collect all coins, the price of which is less than max_price,default=infinity)
+```bash
+scrapy crawl coinmarketcapspider -a max_price=20
+```
+* Arguments can be used either individually or together
+```bash
+scrapy crawl coinmarketcapspider -a min_price=10 -a max_price=20 -a page=2
+```
+
 ## Data
 Spider collect:
 * coin name,abbreviation,website,rank
