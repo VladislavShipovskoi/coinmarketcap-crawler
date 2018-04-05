@@ -17,7 +17,7 @@ class CoinmarketcapItem(scrapy.Item):
     price_usd = scrapy.Field()
     price_btc = scrapy.Field()
     volume_24_usd = scrapy.Field()
-    change_24_usd = scrapy.Field()
+    change_24 = scrapy.Field()
 
 
 class HistoricalData(scrapy.Item):

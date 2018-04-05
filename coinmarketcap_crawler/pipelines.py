@@ -17,7 +17,7 @@ class CoinmarketcapCrawlerPipeline(object):
         return pipeline
 
     def spider_opened(self, spider):
-        file = open('%s-%s.csv' % (spider.currency,spider.name), 'w+b')
+        file = open('%s.csv' % spider.name, 'w+b')
         self.files[spider] = file
         self.exporter = CsvItemExporter(file)
         if spider.name == "all-coins":
@@ -30,7 +30,7 @@ class CoinmarketcapCrawlerPipeline(object):
                 'price_usd',
                 'price_btc',
                 'volume_24_usd',
-                'change_24_usd',
+                'change_24',
             ]
         elif spider.name == "historical-data":
             self.exporter.fields_to_export = [
