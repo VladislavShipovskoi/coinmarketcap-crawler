@@ -11,10 +11,11 @@ class CoinmarketcapSpider(CrawlSpider):
         'FEED_FORMAT': 'csv',
         'FEED_URI': 'coins.csv'
     }
-    start_urls = [
-        BASE_URL.format('1')
-    ]
-    page = 1
+
+    def __init__(self, page=1, *args, **kwargs):
+        super(CoinmarketcapSpider, self).__init__(*args, **kwargs)
+        self.page = int(page)
+        self.start_urls = [BASE_URL.format(page)]
 
     def parse(self, response):
         all_url = response.xpath("//tbody/tr/td/span/a/@href").extract()
