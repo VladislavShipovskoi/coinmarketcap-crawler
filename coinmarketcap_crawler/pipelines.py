@@ -23,7 +23,8 @@ class CoinmarketcapCrawlerPipeline(object):
         if spider.name == "all-coins":
             self.exporter.fields_to_export = [
                 'rank',
-                'coin',
+                'name',
+                'type',
                 'short_name',
                 'website',
                 'market_cap_usd',

@@ -1,6 +1,6 @@
 import scrapy
 from scrapy.spiders import CrawlSpider
-from coinmarketcap_crawler.items import CoinmarketcapItem
+from coinmarketcap_crawler.items import AllCoinsData
 
 BASE_URL = 'https://coinmarketcap.com/{}'
 
@@ -31,7 +31,7 @@ class AllCoinsSpider(CrawlSpider):
             )
 
     def parse_coin(self, response):
-        coin_item = CoinmarketcapItem()
+        coin_item = AllCoinsData()
         price = response.xpath(
             "//span/span[@class='text-large2']/text()"
         ).extract_first()
@@ -43,7 +43,10 @@ class AllCoinsSpider(CrawlSpider):
             return
         if price and (self.min_price < price < self.max_price):
             coin_item['price_usd'] = price
-            coin_item['coin'] = response.xpath('//h1/img/@alt').extract_first()
+            coin_item['name'] = response.xpath("//h1/img/@alt").extract_first()
+            coin_item['type'] = response.xpath(
+                "//span[@class='label label-warning'][1]/text()"
+            ).extract_first()
             coin_item['short_name'] = response.xpath(
                 "//h1/small[@class='bold hidden-xs']/text()"
             ).extract_first().strip('()')

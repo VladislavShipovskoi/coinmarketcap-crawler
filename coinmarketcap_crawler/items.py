@@ -8,8 +8,9 @@
 import scrapy
 
 
-class CoinmarketcapItem(scrapy.Item):
-    coin = scrapy.Field()
+class AllCoinsData(scrapy.Item):
+    name = scrapy.Field()
+    type = scrapy.Field()
     website = scrapy.Field()
     rank = scrapy.Field()
     short_name = scrapy.Field()
