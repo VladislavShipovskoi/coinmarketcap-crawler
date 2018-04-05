@@ -6,14 +6,12 @@ BASE_URL = 'https://coinmarketcap.com/{}'
 
 
 class CoinmarketcapSpider(CrawlSpider):
+
     name = "coinmarketcapspider"
-    custom_settings = {
-        'FEED_FORMAT': 'csv',
-        'FEED_URI': 'coins.csv'
-    }
 
     def __init__(self, page=1,min_price=0,max_price=float("inf"),*args, **kwargs):
         super(CoinmarketcapSpider, self).__init__(*args, **kwargs)
+        name = "coinmarketcapspider"
         self.page = int(page)
         self.min_price = float(min_price)
         self.max_price = float(max_price)
@@ -47,7 +45,7 @@ class CoinmarketcapSpider(CrawlSpider):
             coin_item['rank'] = response.xpath("//span[@class='label label-success']/text()").extract_first().replace('Rank ', '')
             coin_item['website'] = '\n'.join(response.xpath("//ul/li/span[@title='Website']/following-sibling::a/@href").extract())
             coin_item['price_btc'] = response.xpath("//span[contains(.,'BTC')]/span/text()").extract_first().replace('\n', '')
-            coin_item['change_24_usd'] = response.xpath("//span[contains(@class, '_change')]/span[@data-format-value]/text()").extract_first()
+            coin_item['change_24_usd'] = response.xpath("//span[contains(@class, '_change')]/span/@data-format-value").extract_first()
             coin_item['market_cap_usd'] = response.xpath("//span[@data-currency-market-cap]/@data-usd").extract_first()
-            coin_item['volume_24_usd'] = response.xpath("//span[@data-currency-volume]/@data-usd").extract_first()
+            coin_item['volume_24_usd'] = response.xpath("//span[@data-currency-volume]/@data-usd").extract_first().replace('?', '')
             yield coin_item

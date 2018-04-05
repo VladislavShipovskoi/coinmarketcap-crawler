@@ -13,7 +13,7 @@ BOT_NAME = 'coinmarketcap_crawler'
 
 SPIDER_MODULES = ['coinmarketcap_crawler.spiders']
 NEWSPIDER_MODULE = 'coinmarketcap_crawler.spiders'
-
+ITEM_PIPELINES = {'coinmarketcap_crawler.pipelines.CoinmarketcapCrawlerPipeline': 300 }
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'coinmarketcap_crawler (+http://www.yourdomain.com)'
