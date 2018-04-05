@@ -5,17 +5,16 @@ from coinmarketcap_crawler.items import CoinmarketcapItem
 BASE_URL = 'https://coinmarketcap.com/{}'
 
 
-class CoinmarketcapSpider(CrawlSpider):
+class AllCoinsSpider(CrawlSpider):
 
-    name = "coinmarketcapspider"
+    name = "all-coins"
 
     def __init__(self, page=1,min_price=0,max_price=float("inf"),*args, **kwargs):
-        super(CoinmarketcapSpider, self).__init__(*args, **kwargs)
-        name = "coinmarketcapspider"
+        super(AllCoinsSpider, self).__init__(*args, **kwargs)
         self.page = int(page)
-        self.min_price = float(min_price)
-        self.max_price = float(max_price)
-        self.start_urls = [BASE_URL.format(page)]
+        self.min_price = min_price
+        self.max_price = max_price
+        self.start_urls = [BASE_URL.format(self.page)]
 
     def parse(self, response):
         all_url = response.xpath("//tbody/tr/td/span/a/@href").extract()

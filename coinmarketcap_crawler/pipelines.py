@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
 
-# Define your item pipelines here
-#
-# Don't forget to add your pipeline to the ITEM_PIPELINES setting
-# See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 from scrapy import signals
 from scrapy.contrib.exporter import CsvItemExporter
 
@@ -21,20 +17,31 @@ class CoinmarketcapCrawlerPipeline(object):
         return pipeline
 
     def spider_opened(self, spider):
-        file = open('%s_items.csv' % spider.name, 'w+b')
+        file = open('%s-%s.csv' % (spider.currency,spider.name), 'w+b')
         self.files[spider] = file
         self.exporter = CsvItemExporter(file)
-        self.exporter.fields_to_export = [
-            'rank',
-            'coin',
-            'short_name',
-            'website',
-            'market_cap_usd',
-            'price_usd',
-            'price_btc',
-            'volume_24_usd',
-            'change_24_usd'
-        ]
+        if spider.name == "all-coins":
+            self.exporter.fields_to_export = [
+                'rank',
+                'coin',
+                'short_name',
+                'website',
+                'market_cap_usd',
+                'price_usd',
+                'price_btc',
+                'volume_24_usd',
+                'change_24_usd',
+            ]
+        elif spider.name == "historical-data":
+            self.exporter.fields_to_export = [
+                'date',
+                'open_price',
+                'high_price',
+                'low_price',
+                'close_price',
+                'volume',
+                'market_cap',
+            ]
         self.exporter.start_exporting()
 
     def spider_closed(self, spider):
