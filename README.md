@@ -1,6 +1,6 @@
 # coinmarketcap-crawler
 
-This is web crawler coinmarketcap data.Results are contained in the csv file.
+This is web crawler coinmarketcap data. Results are contained in the csv file.
 
 ## Start
 1. make virtualenv and run
