@@ -1,4 +1,4 @@
-# coinmarketcap-crawler
+# Coinmarketcap scraper
 
 This scrapper collects data from the coinmarketcap.com site and contains 2 spiders:
 
