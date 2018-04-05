@@ -21,7 +21,7 @@ scrapy crawl coinmarketcapspider
 Spider collect:
 * coin name,abbreviation,website,rank
 * coin price in USD,BTC
-* coin price change(24h) in usd
+* coin price change(24h) in %
 * coin volume(24h) in usd
 * coin market cap in usd
 
