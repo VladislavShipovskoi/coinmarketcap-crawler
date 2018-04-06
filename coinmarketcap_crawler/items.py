@@ -13,7 +13,7 @@ class AllCoinsData(scrapy.Item):
     type = scrapy.Field()
     website = scrapy.Field()
     rank = scrapy.Field()
-    short_name = scrapy.Field()
+    symbol = scrapy.Field()
     market_cap_usd = scrapy.Field()
     price_usd = scrapy.Field()
     price_btc = scrapy.Field()

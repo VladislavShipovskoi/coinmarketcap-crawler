@@ -36,38 +36,68 @@ class AllCoinsSpider(CrawlSpider):
         price = response.xpath(
             "//span/span[@class='text-large2']/text()"
         ).extract_first()
+
         if not price:
             return
         try:
             price = float(price.replace(',', '.'))
         except ValueError:
             return
+
         if price and (self.min_price < price < self.max_price):
-            coin_item['price_usd'] = price
-            coin_item['name'] = response.xpath("//h1/img/@alt").extract_first()
+            rank = response.xpath(
+                "//span[@class='label label-success']/text()"
+            ).extract_first()
+
+            coin_item['name'] = response.xpath(
+                "//h1/img/@alt"
+            ).extract_first()
+
             coin_item['type'] = response.xpath(
                 "//span[@class='label label-warning'][1]/text()"
             ).extract_first()
-            coin_item['short_name'] = response.xpath(
+
+            symbol = response.xpath(
                 "//h1/small[@class='bold hidden-xs']/text()"
-            ).extract_first().strip('()')
-            coin_item['rank'] = response.xpath(
-                "//span[@class='label label-success']/text()"
-            ).extract_first().replace('Rank ', '')
-            coin_item['website'] = '\n'.join(
-                response.xpath(
-                    "//ul/li/span[@title='Website']/following-sibling::a/@href"
-                ).extract())
-            coin_item['price_btc'] = response.xpath(
-                "//span[contains(.,'BTC')]/span/text()"
-            ).extract_first().replace('\n', '')
-            coin_item['change_24'] = response.xpath(
-                "//span[contains(@class, '_change')]/span/@data-format-value"
             ).extract_first()
-            coin_item['market_cap_usd'] = response.xpath(
+
+            website = response.xpath(
+                "//ul/li/span[@title='Website']/following-sibling::a/@href"
+            ).extract()
+
+            market_cap_usd = response.xpath(
                 "//span[@data-currency-market-cap]/@data-usd"
             ).extract_first()
-            coin_item['volume_24_usd'] = response.xpath(
+
+            price_btc = response.xpath(
+                "//span[contains(.,'BTC')]/span/text()"
+            ).extract_first()
+
+            volume_24_usd = response.xpath(
                 "//span[@data-currency-volume]/@data-usd"
-            ).extract_first().replace('?', '')
+            ).extract_first()
+
+            change_24 = response.xpath(
+                "//span[contains(@class, '_change')]/span/@data-format-value"
+            ).extract_first()
+
+            if not change_24:
+                change_24 = "unknown"
+
+            if not website:
+                website = "unknown"
+            else:
+                website = '\n'.join(website)
+
+            coin_item['price_usd'] = price
+            coin_item['website'] = website
+            coin_item['change_24'] = change_24
+            coin_item['symbol'] = symbol.strip('()')
+            coin_item['rank'] = rank.replace('Rank ', '')
+            coin_item['price_btc'] = price_btc.replace('\n', '')
+            coin_item['volume_24_usd'] = volume_24_usd.replace('?', 'unknown')
+            coin_item['market_cap_usd'] = market_cap_usd.replace(
+                'None', 'unknown'
+            )
+
             yield coin_item

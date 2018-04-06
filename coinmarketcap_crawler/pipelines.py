@@ -25,7 +25,7 @@ class CoinmarketcapCrawlerPipeline(object):
                 'rank',
                 'name',
                 'type',
-                'short_name',
+                'symbol',
                 'website',
                 'market_cap_usd',
                 'price_usd',
