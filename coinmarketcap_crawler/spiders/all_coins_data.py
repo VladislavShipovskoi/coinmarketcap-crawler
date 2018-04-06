@@ -8,7 +8,8 @@ BASE_URL = 'https://coinmarketcap.com/{}'
 class AllCoinsSpider(CrawlSpider):
     name = "all-coins"
 
-    def __init__(self, page=1, min_price=0, max_price=float("inf"), *args,**kwargs):
+    def __init__(self, page=1, min_price=0, max_price=float("inf"), *args,
+                 **kwargs):
         super(AllCoinsSpider, self).__init__(*args, **kwargs)
         self.page = int(page)
         self.min_price = min_price

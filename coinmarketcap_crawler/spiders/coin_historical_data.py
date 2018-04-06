@@ -6,10 +6,10 @@ BASE_URL = 'https://coinmarketcap.com/currencies/{}/historical-data/?start={}&en
 
 
 class HistoricalDataSpider(CrawlSpider):
-
     name = "historical-data"
 
-    def __init__(self, currency='bitcoin',start=None,end=None,*args, **kwargs):
+    def __init__(self, currency='bitcoin', start=None, end=None, *args,
+                 **kwargs):
         super(HistoricalDataSpider, self).__init__(*args, **kwargs)
         self.currency = currency
         self.start = start
@@ -19,7 +19,11 @@ class HistoricalDataSpider(CrawlSpider):
         else:
             self.end = datetime.datetime.today().strftime('%Y%m%d')
             self.start = '20100101'
-        self.start_urls = [BASE_URL.format(self.currency,self.start,self.end)]
+        self.start_urls = [BASE_URL.format(
+            self.currency,
+            self.start,
+            self.end
+        )]
 
     def parse(self, response):
         all_data = response.xpath("//tbody/tr[@class='text-right']")
