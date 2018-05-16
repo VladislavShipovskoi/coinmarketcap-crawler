@@ -12,8 +12,8 @@ class AllCoinsSpider(CrawlSpider):
                  **kwargs):
         super(AllCoinsSpider, self).__init__(*args, **kwargs)
         self.page = int(page)
-        self.min_price = min_price
-        self.max_price = max_price
+        self.min_price = float(min_price)
+        self.max_price = float(max_price)
         self.start_urls = [BASE_URL.format(self.page)]
 
     def parse(self, response):
